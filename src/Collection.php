@@ -6,25 +6,27 @@ use Traversable;
 
 class Collection implements \IteratorAggregate, \Countable
 {
-    private array $inputs;
+    protected array $inputs;
 
     public function __construct(array $inputs = [])
     {
         $this->inputs   =   $inputs;
     }
 
-    public function all(string $key = null): array
+    public function all(): array
     {
-        if (null === $key) {
-            return $this->inputs;
-        }
-
-        if (!array_key_exists($key, $this->inputs)){
-            return [];
-        }
-
-        return $this->inputs[$key];
+      return $this->inputs;
     }
+
+    public function get(string $key, mixed $default = null): mixed
+    {
+        if (array_key_exists($key, $this->inputs)){
+            return $this->inputs[$key];
+        }
+
+        return $default;
+    }
+
 
     /**
      * Returns the parameter keys.
